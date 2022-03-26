@@ -8,6 +8,7 @@ export default defineConfig({
     jsxInject: `import React from 'react'`
   },
   server: {
+    // proxy local netlify functions to work like prod
     proxy: {
       '/.netlify/functions/': {
         target: 'http://localhost:9999/',
