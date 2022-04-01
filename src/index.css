@@ -1,13 +1,52 @@
+/* Deep-orange Light scheme (Default) */
+/* Can be forced with data-theme="light" */
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --primary: #f4511e;
+  --primary-hover: #e64a19;
+  --primary-focus: rgba(244, 81, 30, 0.125);
+  --primary-inverse: #FFF;
+}
+
+/* Deep-orange Dark scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primary: #f4511e;
+    --primary-hover: #ff5722;
+    --primary-focus: rgba(244, 81, 30, 0.25);
+    --primary-inverse: #FFF;
+  }
+}
+
+/* Deep-orange Dark scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme="dark"] {
+  --primary: #f4511e;
+  --primary-hover: #ff5722;
+  --primary-focus: rgba(244, 81, 30, 0.25);
+  --primary-inverse: #FFF;
+}
+
+/* Deep-orange (Common styles) */
+:root {
+  --form-element-active-border-color: var(--primary);
+  --form-element-focus-color: var(--primary-focus);
+  --switch-color: var(--primary-inverse);
+  --switch-checked-background-color: var(--primary);
+}
+
+
 html,
 body {
   height: 100%;
   width: 100%;
   padding: 0;
   margin: 0;
-  background: #fafafa;
   font-family: 'Helvetica Neue', arial, sans-serif;
+  font-size: 15px;
   font-weight: 400;
-  color: #444;
+  line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -17,14 +56,55 @@ body {
 }
 
 #app {
-  height: 100%;
-  text-align: center;
-  background-color: #673ab8;
-  color: #fff;
-  font-size: 1.5em;
-  padding-top: 100px;
+width: 100%;
+padding: 1rem;
 }
 
-.link {
-  color: #fff;
+.station {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.station-direction {
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+}
+.station-direction:hover, .station-direction:active {
+  transform: scale(0.95);
+}
+
+.station-tag {
+padding: 0.5rem;
+  border-radius: 5px;
+  display: inline;
+  color:#fff;
+  margin-left: 0.5rem;
+}
+
+
+.tag-red {
+  background-color: firebrick;
+
+}
+.tag-blue {
+  background-color: dodgerblue;
+
+}
+.tag-green {
+  background-color: forestgreen;
+
+}
+.tag-teal {
+  background-color: teal;
+
+}
+.tag-purple {
+  background-color: slateblue;
+
+}
+.tag-orange {
+  background-color: darkorange;
+
 }

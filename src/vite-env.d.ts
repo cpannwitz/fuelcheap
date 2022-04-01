@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly TANKERKOENIG_API_KEY: string
+  readonly VITE_TANKERKOENIG_API_KEY: string
   // more env variables...
 }
 
