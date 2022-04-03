@@ -35,7 +35,7 @@ export function App() {
 
   const [rad, setRad] = useState(10)
   function onRadChange(e: any) {
-    setRad(e.target.value)
+    setRad(Number(e.target.value))
   }
 
   async function onInit() {
