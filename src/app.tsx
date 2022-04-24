@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks'
+import { useState } from 'react'
 import getStations from './getStations'
 import { TStationsBasic } from './types'
 import DirectionsIcon from './directions.svg'
@@ -59,7 +59,7 @@ export function App() {
 
       <fieldset style={{ display: 'flex', justifyContent: 'space-between' }}>
         <legend>Kraftstoff</legend>
-        <label for="large">
+        <label htmlFor="large">
           <input
             type="radio"
             id="all"
@@ -70,7 +70,7 @@ export function App() {
           />
           Alle
         </label>
-        <label for="large">
+        <label htmlFor="large">
           <input
             type="radio"
             id="e10"
@@ -81,7 +81,7 @@ export function App() {
           />
           E10
         </label>
-        <label for="medium">
+        <label htmlFor="medium">
           <input
             type="radio"
             id="e5"
@@ -92,7 +92,7 @@ export function App() {
           />
           E5
         </label>
-        <label for="small">
+        <label htmlFor="small">
           <input
             type="radio"
             id="diesel"
@@ -116,7 +116,7 @@ export function App() {
         </select>
       )}
 
-      <label for="range">
+      <label htmlFor="range">
         Radius - {rad} km
         <input
           type="range"
@@ -186,3 +186,5 @@ export function App() {
     </>
   )
 }
+
+export default App

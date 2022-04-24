@@ -5,7 +5,7 @@
   --primary: #f4511e;
   --primary-hover: #e64a19;
   --primary-focus: rgba(244, 81, 30, 0.125);
-  --primary-inverse: #FFF;
+  --primary-inverse: #fff;
 }
 
 /* Deep-orange Dark scheme (Auto) */
@@ -15,7 +15,7 @@
     --primary: #f4511e;
     --primary-hover: #ff5722;
     --primary-focus: rgba(244, 81, 30, 0.25);
-    --primary-inverse: #FFF;
+    --primary-inverse: #fff;
   }
 }
 
@@ -25,7 +25,7 @@
   --primary: #f4511e;
   --primary-hover: #ff5722;
   --primary-focus: rgba(244, 81, 30, 0.25);
-  --primary-inverse: #FFF;
+  --primary-inverse: #fff;
 }
 
 /* Deep-orange (Common styles) */
@@ -36,19 +36,23 @@
   --switch-checked-background-color: var(--primary);
 }
 
-
 html,
 body {
   height: 100%;
   width: 100%;
-  padding: 0;
+  padding: 0.5rem;
   margin: 0;
-  font-family: 'Helvetica Neue', arial, sans-serif;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.75;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 * {
@@ -56,8 +60,8 @@ body {
 }
 
 #app {
-width: 100%;
-padding: 1rem;
+  width: 100%;
+  padding: 1rem;
 }
 
 .station {
@@ -71,40 +75,34 @@ padding: 1rem;
   height: 2.5rem;
   cursor: pointer;
 }
-.station-direction:hover, .station-direction:active {
+.station-direction:hover,
+.station-direction:active {
   transform: scale(0.95);
 }
 
 .station-tag {
-padding: 0.5rem;
+  padding: 0.5rem;
   border-radius: 5px;
   display: inline;
-  color:#fff;
+  color: #fff;
   margin-left: 0.5rem;
 }
 
-
 .tag-red {
   background-color: firebrick;
-
 }
 .tag-blue {
   background-color: dodgerblue;
-
 }
 .tag-green {
   background-color: forestgreen;
-
 }
 .tag-teal {
   background-color: teal;
-
 }
 .tag-purple {
   background-color: slateblue;
-
 }
 .tag-orange {
   background-color: darkorange;
-
 }
