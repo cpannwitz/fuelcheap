@@ -85,7 +85,7 @@ code {
   border-radius: 5px;
   display: inline;
   color: #fff;
-  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .tag-red {
@@ -105,4 +105,26 @@ code {
 }
 .tag-orange {
   background-color: darkorange;
+}
+
+
+/* Leaflet - Circumvent PicoCSS-Styles affecting the Map */
+.leaflet-container [role="button"] {
+  background-color: unset;
+  box-shadow: none;
+  border-color: transparent;
+  padding: 0;
+}
+
+.leaflet-container .leaflet-bar a {
+  background-color: #ffffff;
+  border-color: #dddddd;
+}
+
+@media (prefers-color-scheme: dark) {
+  .leaflet-container .leaflet-bar a {
+    background-color: #555555;
+    border-color: #333333;
+    color: #cccccc;
+  }
 }

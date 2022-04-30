@@ -2,6 +2,7 @@ import { useState } from 'react'
 import getStations from './getStations'
 import { TStationsBasic } from './types'
 import DirectionsIcon from './directions.svg'
+import Map from './Map'
 
 const apikey = import.meta.env.VITE_TANKERKOENIG_API_KEY ?? ''
 
@@ -16,7 +17,11 @@ async function onGetLocation() {
   return { lng: longitude, lat: latitude }
 }
 
-export function App() {
+function App() {
+  const [position, setPosition] = useState<
+    { lng: number; lat: number } | undefined
+  >(undefined)
+
   const [stations, setStations] = useState<TStationsBasic>([])
   const [stationsLoading, setStationsLoading] = useState(false)
 
@@ -42,12 +47,17 @@ export function App() {
     try {
       setStationsLoading(true)
       const { lng, lat } = await onGetLocation()
+      setPosition({ lng, lat })
       const stations = await getStations({ lat, lng, rad, type, sort, apikey })
       setStations(stations)
       setStationsLoading(false)
     } catch (error) {
       alert('Error with location or stations.')
     }
+  }
+  const [enabledMap, setEnabledMap] = useState(false)
+  function onToggleMap() {
+    setEnabledMap(s => !s)
   }
 
   return (
@@ -59,7 +69,7 @@ export function App() {
 
       <fieldset style={{ display: 'flex', justifyContent: 'space-between' }}>
         <legend>Kraftstoff</legend>
-        <label htmlFor="large">
+        <label htmlFor="all">
           <input
             type="radio"
             id="all"
@@ -70,7 +80,7 @@ export function App() {
           />
           Alle
         </label>
-        <label htmlFor="large">
+        <label htmlFor="e10">
           <input
             type="radio"
             id="e10"
@@ -81,7 +91,7 @@ export function App() {
           />
           E10
         </label>
-        <label htmlFor="medium">
+        <label htmlFor="e5">
           <input
             type="radio"
             id="e5"
@@ -92,7 +102,7 @@ export function App() {
           />
           E5
         </label>
-        <label htmlFor="small">
+        <label htmlFor="diesel">
           <input
             type="radio"
             id="diesel"
@@ -130,58 +140,70 @@ export function App() {
       </label>
 
       <div>
-        {stations
-          .filter(station => station.isOpen === true)
-          .map(station => (
-            <article className="station" key={station.id}>
-              <div>
-                <div className="headings">
-                  <h2>{station.brand}</h2>
-                  <p>
-                    {station.dist} km -{' '}
-                    {station.isOpen ? <ins>Open</ins> : <del>Closed</del>} -{' '}
-                    {station.street} {station.houseNumber}, {station.postCode}{' '}
-                    {station.place}
-                  </p>
-                </div>
-                {station.price ? (
-                  <>
-                    <div className="station-tag tag-orange">
-                      {type}: <b>{station.price}</b> €
-                    </div>
-                  </>
-                ) : (
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <div className="station-tag tag-orange">
-                      E10: <b>{station.e10?.toFixed(2)}</b> €
-                    </div>
-
-                    <div className="station-tag tag-teal">
-                      E5: <b>{station.e5?.toFixed(2)}</b> €
-                    </div>
-
-                    <div className="station-tag tag-purple">
-                      Diesel: <b>{station.diesel?.toFixed(2)}</b> €
-                    </div>
+        {stations && stations.length > 0 && position && (
+          <button className="outline" onClick={onToggleMap}>
+            {enabledMap ? 'Liste' : 'Karte'}
+          </button>
+        )}
+        <hr />
+        {enabledMap && position ? (
+          <div style={{ width: '100%', height: '400px' }}>
+            <Map position={position} stations={stations} />
+          </div>
+        ) : (
+          stations
+            .filter(station => station.isOpen === true)
+            .map(station => (
+              <article className="station" key={station.id}>
+                <div>
+                  <div className="headings">
+                    <h2>{station.brand}</h2>
+                    <p>
+                      {station.dist} km -{' '}
+                      {station.isOpen ? <ins>Open</ins> : <del>Closed</del>} -{' '}
+                      {station.street} {station.houseNumber}, {station.postCode}{' '}
+                      {station.place}
+                    </p>
                   </div>
-                )}
-              </div>
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${station.lat},${station.lng}`}
-              >
-                <img
-                  className="station-direction"
-                  src={DirectionsIcon}
-                  alt="directions"
-                />
-              </a>
-            </article>
-          ))}
+                  {station.price ? (
+                    <>
+                      <div className="station-tag tag-orange">
+                        {type}: <b>{station.price}</b> €
+                      </div>
+                    </>
+                  ) : (
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexWrap: 'wrap'
+                      }}
+                    >
+                      <div className="station-tag tag-orange">
+                        E10: <b>{station.e10?.toFixed(2)}</b> €
+                      </div>
+
+                      <div className="station-tag tag-teal">
+                        E5: <b>{station.e5?.toFixed(2)}</b> €
+                      </div>
+
+                      <div className="station-tag tag-purple">
+                        Diesel: <b>{station.diesel?.toFixed(2)}</b> €
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${station.lat},${station.lng}`}
+                >
+                  <img
+                    className="station-direction"
+                    src={DirectionsIcon}
+                    alt="directions"
+                  />
+                </a>
+              </article>
+            ))
+        )}
       </div>
     </>
   )
